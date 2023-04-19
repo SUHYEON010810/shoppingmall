@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="memberSpace">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+<!-- 	<typeAlias  alias="productDAO" type="egovframework.example.sample.service.productDAO"/> -->
+
+	<!-- 회원 가입 -->
+	<insert id="productDAO.InsertProduct">
+		INSERT INTO product(prodnum, name, kind, price, content, image, regdate)
+		values(SEQ_product_prodnum.nextval, #name#, #kind#, #price#, #content#, #image#, #regdate#)
+	</insert>
+
+
+</sqlMap>

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+	#frm {
+		text-align: center;
+		margin :0 auto;
+	}
+
+	#inputDiv > input{
+		display:block;
+		margin: 0 auto;
+		margin-top:10px;
+	}
+
+	a{
+		margin-top:10px;
+		color:#6E6E6E;
+		font-size:13px;
+	}
+
+	a:hover{
+    	color:black;
+	}
+
+	#btn_Submit{
+		margin :10px 0px;
+		width: 375px;
+	}

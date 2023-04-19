@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="memberSpace">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="MemberVO" type="egovframework.example.sample.service.memberVO"/>
+
+
+	<!-- 로그인 -->
+	<select id="memberDAO.selectlogin" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM member
+		WHERE u_id = #u_id# AND password = #password#
+	</select>
+
+	<!-- 회원 가입 -->
+	<insert id="memberDAO.insertMember" >
+		INSERT INTO member(u_id, password, name, email, address, regdate, phone, zip_code) values(#u_id#, #password#, #name#, #email#, #address#, #regdate#, #phone#, #zip_code#)
+	</insert>
+
+	<!-- 아이디 중복 체크 -->
+	<!-- 아이디 체크 -->
+	<select id="memberDAO.idcheck"  resultClass="int">
+		SELECT COUNT(*) FROM member
+		WHERE u_id = #u_id#
+	</select>
+
+	<!-- 회원 구분 -->
+	<select id="memberDAO.selectmem_div" resultClass="int">
+		SELECT m_divide FROM member
+		WHERE u_id = #u_id#
+	</select>
+
+</sqlMap>

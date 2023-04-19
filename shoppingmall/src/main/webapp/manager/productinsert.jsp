@@ -48,7 +48,7 @@
 			<tr>
 				<td colspan="2" id="prodInsertbutTd">
 					<button type="submit"  class="bt_css" >등록</button>
-					<button type="reset" class="bt_css" onclick="location.href='productinsert.do'" >취소</button>
+					<button type="reset" class="bt_css" onclick="location.href='managerClothesTop.do'" >취소</button>
 				</td>
 			</tr>
 		</table>

@@ -8,5 +8,7 @@ public interface productService {
 
 	List<?> SelectproductList(productVO vo) throws Exception;
 
+	productVO seleteproductData(int prodnum) throws Exception;
+
 
 }

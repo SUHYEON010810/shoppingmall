@@ -4,7 +4,9 @@
 <sqlMap namespace="memberSpace">
 
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
-<!-- 	<typeAlias  alias="productDAO" type="egovframework.example.sample.service.productDAO"/> -->
+ 	<typeAlias  alias="productVO" type="egovframework.example.sample.service.productVO"/>
+
+<!--  	<typeAlias  alias="productDAO" type="egovframework.example.sample.service.productDAO"/> -->
 
 	<!-- 상품 등록 -->
 	<insert id="productDAO.InsertProduct">
@@ -17,6 +19,11 @@
  		SELECT prodnum, name, kind, price, content, image, TO_CHAR(regDate, 'yyyy-mm-dd')as regDate
 		FROM product
 		WHERE kind = #kind#
+	</select>
+
+	<select id="productDAO.seleteproductData" resultClass="productVO">
+		SELECT prodnum, name, kind, price, content, image, regdate FROM product
+		WHERE prodnum=#prodnum#
 	</select>
 
 

@@ -30,6 +30,12 @@ public class productServiceImpl extends EgovAbstractServiceImpl implements produ
 		return productDAO.SelectproductList(vo);
 	}
 
+	@Override
+	public productVO seleteproductData(int prodnum) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.seleteproductData(prodnum);
+	}
+
 
 
 }

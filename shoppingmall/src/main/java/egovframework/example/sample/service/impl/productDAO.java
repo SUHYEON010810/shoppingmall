@@ -22,4 +22,9 @@ public class productDAO extends EgovAbstractDAO{
 		return list("productDAO.SelectproductList", vo);
 	}
 
+	public productVO seleteproductData(int prodnum) {
+		// TODO Auto-generated method stub
+		return (productVO) select("productDAO.seleteproductData", prodnum);
+	}
+
 }

@@ -10,6 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/reset.css">
+<link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/topdetail.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -18,27 +19,35 @@
 <body>
 <%@ include file="../include/topmenu.jsp" %>
 <%
-	String image_url = "D:\\sh_file\\shoppingmall\\" ;
+	String image_url = "./image/" ;
 /* 	image_url += ${top.image}; */
 
 %>
 
 
 <div>
-	<div>
-		<button onclick="location.href='productinsert.do'">상품추가</button>
-	</div>
-	 <!-- 반복문 -->
-     <c:forEach var="result" items="${top}" varStatus="status">
-     	<div>
-     	<%-- <img src="<%= image_url%>${result.image}" id="index_main_image"/> --%>
 
-     		${result.image}
-     		<span>${result.name} </span>
-     		<button>수정</button>
-			<button>삭제</button>
-     	</div>
-     </c:forEach>
+	 <!-- 반복문 -->
+	 	<table>
+	 	<div id="titlebtn">
+			<h2>상의 리스트 </h2>
+			<button onclick="location.href='productinsert.do'" class="bt_css" id="insertproductBTN">상품추가</button>
+	 	</div>
+
+	 		<tr>
+	 			<th>상품명</th>
+	 			<th>가격</th>
+	 			<th>등록일</th>
+	 		</tr>
+	 		<c:forEach var="result" items="${top}" varStatus="status">
+     			<tr>
+
+     				<td><a href="topproductDetail.do?prodnum=${result.prodnum}"> ${ result.name } </a></td>
+     				<td>${result.price}</td>
+     				<td>${result.regdate}</td>
+     			</tr>
+     		</c:forEach>
+	 	</table>
 </div>
 </body>
 </html>

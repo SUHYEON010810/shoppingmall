@@ -46,6 +46,8 @@ public class shopController {
 		List<?> list = productservice.SelectproductList(vo);
 		System.out.println(list);
 
+
+
 		model.addAttribute("top", list);
 
 		return "manager/managerClothesTop";
@@ -71,9 +73,14 @@ public class shopController {
             String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
             UUID uuid = UUID.randomUUID(); // UUID 구하기
             fileName = uuid + "." + ext;
-            uploadFile.transferTo(new File("D:\\sh_file\\shoppingmall" + fileName));
+            System.out.println("1");
+            String path = System.getProperty("user.dir");
+            System.out.println("현재 작업 경로: " + path);
+            uploadFile.transferTo(new File("D:\\sh_file\\shoppingmall\\" + fileName));
+            System.out.println("2");
         }
         vo.setImage(fileName);
+
 
 		/* 날짜 세팅*/
 		Calendar cal = new GregorianCalendar();
@@ -90,5 +97,17 @@ public class shopController {
 		return "redirect:managerClothesTop.do";
 	}
 
+	/* 상위 상세보기 */
+	@RequestMapping(value = "/topproductDetail.do")
+	public String topproductDetail(int prodnum) throws Exception {
+		System.out.println("상세보기 들어옴");
+
+		productVO vo = productservice.seleteproductData(prodnum);
+		System.out.println(vo.toString());
+
+
+		return "";
+
+	}
 
 }

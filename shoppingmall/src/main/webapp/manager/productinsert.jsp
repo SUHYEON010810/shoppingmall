@@ -6,14 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/reset.css">
 <link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/productinsert.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <title>상품 등록</title>
 </head>
+
 <body>
 
 	<%@ include file="../include/topmenu.jsp" %>
 
-
-	<form action="productinsertsave.do" method="post" id="frm">
+	<form action="productinsertsave.do" method="post" id="frm" encType="multipart/form-data">
 		<h2>상품 등록</h2>
 		<table id="ProdInsertTable">
 			<tr>
@@ -38,12 +41,14 @@
 				<td> <textarea rows="10" cols="53" id="content" name="content" ></textarea></td>
 			</tr>
 			<tr>
-				<td> <label for="image">사진 </label></td>
-				<td> <input type="file" id="image" name="image" > </td>
+				<td> <label for="uploadFile">사진 </label></td>
+				<td> <input type="file" id="uploadFile" name="uploadFile" > </td>
 			</tr>
+
 			<tr>
 				<td colspan="2" id="prodInsertbutTd">
 					<button type="submit"  class="bt_css" >등록</button>
+					<button type="reset" class="bt_css" onclick="location.href='productinsert.do'" >취소</button>
 				</td>
 			</tr>
 		</table>

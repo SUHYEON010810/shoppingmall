@@ -6,11 +6,18 @@
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 <!-- 	<typeAlias  alias="productDAO" type="egovframework.example.sample.service.productDAO"/> -->
 
-	<!-- 회원 가입 -->
+	<!-- 상품 등록 -->
 	<insert id="productDAO.InsertProduct">
 		INSERT INTO product(prodnum, name, kind, price, content, image, regdate)
 		values(SEQ_product_prodnum.nextval, #name#, #kind#, #price#, #content#, #image#, #regdate#)
 	</insert>
+
+	<!-- 상품 리스트 -->
+	<select id="productDAO.SelectproductList" resultClass="egovMap">
+ 		SELECT prodnum, name, kind, price, content, image, TO_CHAR(regDate, 'yyyy-mm-dd')as regDate
+		FROM product
+		WHERE kind = #kind#
+	</select>
 
 
 </sqlMap>

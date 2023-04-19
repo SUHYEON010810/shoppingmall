@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/reset.css">
-<title>Insert title here</title>
+<title>상품 리스트</title>
 </head>
 <body>
 <%@ include file="../include/topmenu.jsp" %>

@@ -22,9 +22,28 @@ public class productDAO extends EgovAbstractDAO{
 		return list("productDAO.SelectproductList", vo);
 	}
 
+	/* 상품 상세 정보 */
 	public productVO seleteproductData(int prodnum) {
 		// TODO Auto-generated method stub
 		return (productVO) select("productDAO.seleteproductData", prodnum);
+	}
+
+	/*상품 삭제*/
+	public int productDelect(int prodnum) {
+		// TODO Auto-generated method stub
+		return (int) delete("productDAO.productDelect",prodnum);
+	}
+
+	/* 상품 수정 */
+	public int updateproduct(productVO vo) {
+		// TODO Auto-generated method stub
+		return (int) update("productDAO.updateproduct", vo);
+	}
+
+	/*상품 토탈 갯수*/
+	public int selectTotal(productVO vo) {
+		// TODO Auto-generated method stub
+		return (int) select("productDAO.selectTotal",vo);
 	}
 
 }

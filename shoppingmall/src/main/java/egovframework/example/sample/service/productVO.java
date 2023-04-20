@@ -14,6 +14,28 @@ public class productVO {
 	private Date regdate;
 	private MultipartFile uploadFile;
 
+	private int viewPage = 1;
+	private int startIndex = 1;
+	private int endIndex = 6;
+
+	public int getViewPage() {
+		return viewPage;
+	}
+	public void setViewPage(int viewPage) {
+		this.viewPage = viewPage;
+	}
+	public int getStartIndex() {
+		return startIndex;
+	}
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+	public int getEndIndex() {
+		return endIndex;
+	}
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
+	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
@@ -65,7 +87,8 @@ public class productVO {
 	@Override
 	public String toString() {
 		return "productVO [prodnum=" + prodnum + ", name=" + name + ", kind=" + kind + ", price=" + price + ", content="
-				+ content + ", image=" + image + ", regdate=" + regdate + ", uploadFile=" + uploadFile + "]";
+				+ content + ", image=" + image + ", regdate=" + regdate + ", uploadFile=" + uploadFile + ", viewPage="
+				+ viewPage + ", startIndex=" + startIndex + ", endIndex=" + endIndex + "]";
 	}
 
 

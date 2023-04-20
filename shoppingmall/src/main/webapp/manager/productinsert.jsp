@@ -34,7 +34,7 @@
 			</tr>
 			<tr>
 				<td> <label for="price">가격 </label></td>
-				<td> <input type="text" id="price" name="price" class="L_input_text" > </td>
+				<td> <input type="number" id="price" name="price" class="L_input_text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" > </td>
 			</tr>
 			<tr>
 				<td> <label for="content">상품설명</label></td>

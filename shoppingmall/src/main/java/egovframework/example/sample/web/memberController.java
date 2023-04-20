@@ -54,7 +54,7 @@ public class memberController {
 		session.removeAttribute("SessionUserID");
 		session.removeAttribute("Sessiondiv");
 
-		return "member/login";
+		return "shop/index";
 	}
 
 	/* 회원가입 폼 */

@@ -70,7 +70,7 @@
 <div id="topmenuDiv">
 	<div id="topmenuDiv_top"></div>
 	<div id="topmenudiv_bottom">
-		<div id="topmenuDiv_left">shopping mall</div>
+		<div id="topmenuDiv_left"><a href="/shoppingmall/index.do"> shopping mall </a></div>
 		<div id="topmenuDiv_right">
 			<% if(USERID == null){ %>
 					<a class="topMenuA" href="#"> 장바구니 </a>

@@ -16,14 +16,40 @@
 
 	<!-- 상품 리스트 -->
 	<select id="productDAO.SelectproductList" resultClass="egovMap">
- 		SELECT prodnum, name, kind, price, content, image, TO_CHAR(regDate, 'yyyy-mm-dd')as regDate
-		FROM product
-		WHERE kind = #kind#
+
+			SELECT b.* FROM(
+			 	SELECT rownum rn, a.* FROM(
+
+			 		SELECT prodnum, name, kind, price, content, image, TO_CHAR(regDate, 'yyyy-mm-dd')as regDate
+					FROM product
+					WHERE kind = #kind#
+					ORDER BY prodnum )a ) b
+			<![CDATA[
+				WHERE rn >= #startIndex# AND rn <= #endIndex#
+			]]>
+
 	</select>
 
+	<!-- 상품 상세보기 -->
 	<select id="productDAO.seleteproductData" resultClass="productVO">
 		SELECT prodnum, name, kind, price, content, image, regdate FROM product
 		WHERE prodnum=#prodnum#
+	</select>
+
+	<!-- 상품 삭제 -->
+	<delete id="productDAO.productDelect" >
+		DELETE FROM product WHERE prodnum = #prodnum#
+	</delete>
+
+	<!-- 상품 수정 -->
+	<update id="productDAO.updateproduct">
+		UPDATE product SET name = #name#, kind = #kind#, price = #price#, content = #content#, image = #image#, regdate = #regdate#
+		WHERE prodnum = #prodnum#
+	</update>
+
+	<!-- 상품 토탈 갯수 -->
+	<select id="productDAO.selectTotal" resultClass="java.lang.Integer">
+		SELECT COUNT(*) total FROM product
 	</select>
 
 

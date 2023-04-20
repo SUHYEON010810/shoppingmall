@@ -1,6 +1,7 @@
 package egovframework.example.sample.web;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -9,11 +10,17 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.sample.service.productService;
@@ -43,12 +50,29 @@ public class shopController {
 	public String managerclothesTop(productVO vo, ModelMap model) throws Exception {
 		vo.setKind("상의");
 
+		/* 페이징 처리를 위해 토탈 갯수 얻어오기 */
+		int total = productservice.selectTotal(vo);
+		int totalPage = (int) Math.ceil((double)total/6);
+		int viewPage = vo.getViewPage();
+		int startIndex = (viewPage-1)*6+1;
+		int endIndex = startIndex + (6-1);
+
+		if(viewPage > totalPage || viewPage <1) {
+			viewPage = 1;
+		}
+
+		vo.setStartIndex(startIndex);
+		vo.setEndIndex(endIndex);
+
+		System.out.println(vo.toString());
+
 		List<?> list = productservice.SelectproductList(vo);
 		System.out.println(list);
 
-
-
 		model.addAttribute("top", list);
+		model.addAttribute("resultList",list);
+		model.addAttribute("tota", total);
+		model.addAttribute("totalPage", totalPage);
 
 		return "manager/managerClothesTop";
 	}
@@ -98,16 +122,99 @@ public class shopController {
 	}
 
 	/* 상위 상세보기 */
-	@RequestMapping(value = "/topproductDetail.do")
-	public String topproductDetail(int prodnum) throws Exception {
+	@RequestMapping(value = "/productDetail.do")
+	public String productDetail(int prodnum, ModelMap model) throws Exception {
 		System.out.println("상세보기 들어옴");
 
 		productVO vo = productservice.seleteproductData(prodnum);
 		System.out.println(vo.toString());
 
+		model.addAttribute("topdetail", vo);
 
-		return "";
+		return "manager/topproductDetail";
 
 	}
+
+	/* 이미지 출력 */
+	@RequestMapping(value = "imgLoad.do")
+	public void imgLoad(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		String fileName = req.getParameter("fileName");
+		String realFilename = "";
+
+		realFilename = "D:\\sh_file\\shoppingmall\\" + fileName;
+		File file = new File(realFilename);
+
+		if (!file.exists()) { // 파일이 존재하는지 확인
+			System.out.println("파일 존재 x");
+			return;
+		}
+
+        res.setHeader("Content-Length", String.valueOf(file.length()));
+        res.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+        Files.copy(file.toPath(), res.getOutputStream());
+	}
+
+	/* 상품 수정 */
+	@RequestMapping(value = "productModify.do")
+	public String productModify(int prodnum, ModelMap model) throws Exception {
+		System.out.println("수정 들어옴");
+
+		productVO vo = productservice.seleteproductData(prodnum);
+		System.out.println(vo.toString());
+
+		model.addAttribute("topdetail", vo);
+
+		return "manager/productModify";
+	}
+
+	/* 상품 수정 저장*/
+	@RequestMapping(value = "productModifysave.do")
+	public String productModifysave(productVO vo) throws Exception {
+		System.out.println("수정 저장 들어옴");
+
+		 String fileName = null;
+	        MultipartFile uploadFile = vo.getUploadFile();
+	        if (!uploadFile.isEmpty()) {
+	            String originalFileName = uploadFile.getOriginalFilename();
+	            String ext = FilenameUtils.getExtension(originalFileName); // 확장자 구하기
+	            UUID uuid = UUID.randomUUID(); // UUID 구하기
+	            fileName = uuid + "." + ext;
+	            System.out.println("1");
+	            String path = System.getProperty("user.dir");
+	            System.out.println("현재 작업 경로: " + path);
+	            uploadFile.transferTo(new File("D:\\sh_file\\shoppingmall\\" + fileName));
+	            System.out.println("2");
+	        }
+	    vo.setImage(fileName);
+
+	    int result = productservice.updateproduct(vo);
+		if (result == 1) {
+			System.out.println("수정 완료");
+		} else {
+			System.out.println("수정 실패");
+		}
+
+		System.out.println(result);
+
+		return "redirect:managerClothesTop.do";
+	}
+
+
+	/* 상품 삭제 */
+	@RequestMapping(value = "productDelect.do")
+	public String productDelect(int prodnum) throws Exception {
+		int result = productservice.productDelect(prodnum);
+
+		if (result == 1) {
+			System.out.println("삭제 완료");
+		} else {
+			System.out.println("삭제 실패");
+		}
+
+		return "redirect:managerClothesTop.do";
+	}
+
+
 
 }

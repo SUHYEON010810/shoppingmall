@@ -10,5 +10,11 @@ public interface productService {
 
 	productVO seleteproductData(int prodnum) throws Exception;
 
+	int productDelect(int prodnum)throws Exception;
+
+	int updateproduct(productVO vo)throws Exception;
+
+	int selectTotal(productVO vo)throws Exception;;
+
 
 }

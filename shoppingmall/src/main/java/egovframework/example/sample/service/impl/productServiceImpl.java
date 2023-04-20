@@ -30,10 +30,32 @@ public class productServiceImpl extends EgovAbstractServiceImpl implements produ
 		return productDAO.SelectproductList(vo);
 	}
 
+	/* 상품 상세정보 찾기 */
 	@Override
 	public productVO seleteproductData(int prodnum) throws Exception {
 		// TODO Auto-generated method stub
 		return productDAO.seleteproductData(prodnum);
+	}
+
+	/*상품 삭제*/
+	@Override
+	public int productDelect(int prodnum) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.productDelect(prodnum);
+	}
+
+	/* 상품 수정 */
+	@Override
+	public int updateproduct(productVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.updateproduct(vo);
+	}
+
+	/* 상품 토탈 갯수*/
+	@Override
+	public int selectTotal(productVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.selectTotal(vo);
 	}
 
 

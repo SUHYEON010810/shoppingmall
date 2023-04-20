@@ -28,19 +28,15 @@
 <%@ include file="../include/topmenu.jsp" %>
 	<div id="topListdiv">
 		<div id="titlebtn">
-			<h2>상의 리스트 </h2>
+			<h2>상품 목록</h2>
 			<button onclick="location.href='productinsert.do'" class="bt_css" id="insertproductBTN">상품추가</button>
 	 	</div>
 	 	<div id="topLiatdiv__items">
-			<c:forEach var="cnt" begin="1" end="3" step="1">
-				<div>
-
-				</div>
-			</c:forEach>
 			<c:forEach var="result" items="${top}" varStatus="status">
 				<div class="topLiatdiv__items__item">
 					<img src="imgLoad.do?fileName=${result.image }" class="topimage"/>
 					<a href="productDetail.do?prodnum=${result.prodnum}"> ${ result.name } </a>
+					<input type="hidden" id="kind" name="kind"  value="${result.kind }">
 					<div id="btnDiv">
 						<button onclick="location='productModify.do?prodnum=${result.prodnum}'">수정</button>
 						<button onclick="fn_delete('${result.prodnum}')">삭제</button>
@@ -51,7 +47,7 @@
 
 		<div id="pagediv" style="margin-top:5px; text-align:center; margin-bottom: 30px;" >
 			<c:forEach var="i" begin="1" end="${totalPage }">
-				<a href="managerClothesTop.do?viewPage=${i }">${i }</a>
+				<a href="managerClothesTop.do?viewPage=${i }&kindint=${ kindint }">${i }</a>
 			</c:forEach>
     	</div>
 	</div>

@@ -86,14 +86,14 @@
 	<table id="topMenu_table">
 		<tr>
 			<% if(userdiv == "관리자"){ %>
-				<td onclick="location.href='managerClothesTop.do'">상의</td>
-				<td>하의</td>
-				<td>원피스</td>
+				<td onclick="location.href='managerClothesTop.do?clothes=상의'">상의</td>
+				<td  onclick="location.href='managerClothesTop.do?clothes=하의'">하의</td>
+				<td onclick="location.href='managerClothesTop.do?clothes=원피스'">원피스</td>
 				<td>상품문의</td>
 			<% }else{ %>
-				<td onclick="location.href='clothesTop.do'">상의</td>
-				<td>하의</td>
-				<td>원피스</td>
+				<td onclick="location.href='clothesTop.do?clothes=상의'">상의</td>
+				<td onclick="location.href='clothesTop.do?clothes=하의'">하의</td>
+				<td onclick="location.href='clothesTop.do?clothes=원피스'">원피스</td>
 				<td>상품문의</td>
 			<%} %>
 		</tr>

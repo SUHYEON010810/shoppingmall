@@ -9,31 +9,70 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/reset.css">
+<link rel="stylesheet" type="text/css" href = " ${pageContext.request.contextPath}/css/shoppingmall/topList.css">
 <title>Insert title here</title>
 </head>
-<body>
-	<form action="boardModify.do" encType="multipart/form-data" method="post">
-		<table id="frm_table">
-			<div>
-				<img src="imgLoad.do?fileName=${topdetail.image }"
-			</div>
-			<div>
-				<h4>${topdetail.name } </h4>
-				<p>가격 : ${topdetail.price }</p>
-				<p>배송비 : 2500원</p>
-				<p>옵션</p>
-				<select>
-					<option>베이지</option>
-					<option>블랙</option>
-				</select>
-				<p>구매수량</p>
-				<select>
-					<option>1</option>
-					<option>2</option>
-				</select>
-			</div>
+<style>
+	#d_frm{
 
-		</table>
+		margin:5% 20%;
+	}
+	#d_big{
+		width : 100%;
+		height:100%;
+
+	}
+
+	.d_div{
+		display: inline-block;
+
+	}
+	#contentdiv{
+		height: 100%;
+		width: 100%;
+	}
+
+	.data{
+		margin-bottom:15px;
+	}
+
+	.data2{
+		margin-bottom:10px;
+	}
+</style>
+
+<body>
+<%@ include file="../include/topmenu.jsp" %>
+	<form action="#" encType="multipart/form-data" method="post" id="d_frm">
+		<div id="d_big">
+			<div class="d_div" style=" width: 55%;">
+				<img src="imgLoad.do?fileName=${topdetail.image }" style="width:100%; height:80% display: inline-block; padding-right: 60px;"/>
+			</div>
+			<div class="d_div"  style=" width: 35%;">
+				<div id="contentdiv" style="margin-left:30px;">
+					<h3>${topdetail.name } </h3>
+					<p class="data">가격 : ${topdetail.price }</p>
+					<p class="data">배송비 : 2500원</p>
+					<p class="data2">옵션</p>
+					<select class="data">
+						<option>베이지</option>
+						<option>블랙</option>
+					</select>
+					<p class="data2">구매수량</p>
+					<select class="data">
+						<option>1</option>
+						<option>2</option>
+					</select>
+					<div>
+						<button>장바구니</button>
+						<button>구매</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
 	</form>
 
 </body>

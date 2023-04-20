@@ -39,16 +39,34 @@ public class shopController {
 		return "shop/index";
 	}
 
-	/* 사용자 상의 페이지 */
+	/* 사용자 상품 페이지 */
 	@RequestMapping(value = "/clothesTop.do")
-	public String clothesTop() throws Exception {
-		return "shop/clothesTop";
-	}
+	public String clothesTop(productVO vo, ModelMap model, String clothes ) throws Exception {
+		vo.setKind(clothes);
 
-	/* 관리자 상의 페이지 */
-	@RequestMapping(value = "/managerClothesTop.do")
-	public String managerclothesTop(productVO vo, ModelMap model) throws Exception {
-		vo.setKind("상의");
+
+		int kindint = vo.getKindint();
+
+		if(clothes != null) {
+			if(clothes.equals("상의")) {
+				vo.setKindint(1);
+				kindint = 1;
+			}else if (clothes.equals("하의")) {
+				vo.setKindint(2);
+				kindint = 2;
+			}else if(clothes.equals("원피스")) {
+				vo.setKindint(3);
+				kindint = 3;
+			}
+		}
+		if(kindint != 0) {
+			if(kindint == 1)
+				vo.setKind("상의");
+			else if (kindint == 2)
+				vo.setKind("하의");
+			else
+				vo.setKind("원피스");
+		}
 
 		/* 페이징 처리를 위해 토탈 갯수 얻어오기 */
 		int total = productservice.selectTotal(vo);
@@ -70,9 +88,71 @@ public class shopController {
 		System.out.println(list);
 
 		model.addAttribute("top", list);
-		model.addAttribute("resultList",list);
 		model.addAttribute("tota", total);
 		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("kindint", kindint);
+
+		return "shop/clothesTop";
+	}
+
+	/* 관리자 상품 페이지 */
+	@RequestMapping(value = "/managerClothesTop.do")
+	public String managerclothesTop(productVO vo, ModelMap model, String clothes ) throws Exception {
+		vo.setKind(clothes);
+
+
+
+		int kindint = vo.getKindint();
+
+		if(clothes != null) {
+			if(clothes.equals("상의")) {
+				vo.setKindint(1);
+				kindint = 1;
+			}else if (clothes.equals("하의")) {
+				vo.setKindint(2);
+				kindint = 2;
+			}else if(clothes.equals("원피스")) {
+				vo.setKindint(3);
+				kindint = 3;
+			}
+		}
+		if(kindint != 0) {
+			if(kindint == 1)
+				vo.setKind("상의");
+			else if (kindint == 2)
+				vo.setKind("하의");
+			else
+				vo.setKind("원피스");
+		}
+
+		/* 페이징 처리를 위해 토탈 갯수 얻어오기 */
+		int total = productservice.selectTotal(vo);
+		System.out.println("총 갯수"+total);
+		int totalPage = (int) Math.ceil((double)total/6);
+		int viewPage = vo.getViewPage();
+		int startIndex = (viewPage-1)*6+1;
+		int endIndex = startIndex + (6-1);
+
+
+
+		if(viewPage > totalPage || viewPage <1) {
+			viewPage = 1;
+		}
+
+		vo.setStartIndex(startIndex);
+		vo.setEndIndex(endIndex);
+
+		System.out.println(vo.toString());
+
+		List<?> list = productservice.SelectproductList(vo);
+		System.out.println("최종 리스트"+list);
+
+		model.addAttribute("top", list);
+		model.addAttribute("tota", total);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("kindint", kindint);
+
+		System.out.println("총 페이지 "+totalPage);
 
 		return "manager/managerClothesTop";
 	}
@@ -118,7 +198,7 @@ public class shopController {
 		else
 			System.out.println("저장 실패");
 
-		return "redirect:managerClothesTop.do";
+		return "redirect:index.do";
 	}
 
 	/* 상위 상세보기 */

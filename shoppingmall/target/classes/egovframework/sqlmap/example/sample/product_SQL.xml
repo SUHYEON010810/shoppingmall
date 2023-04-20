@@ -25,7 +25,7 @@
 					WHERE kind = #kind#
 					ORDER BY prodnum )a ) b
 			<![CDATA[
-				WHERE rn >= #startIndex# AND rn <= #endIndex#
+				WHERE kind = #kind# and rn >= #startIndex# AND rn <= #endIndex#
 			]]>
 
 	</select>
@@ -50,6 +50,7 @@
 	<!-- 상품 토탈 갯수 -->
 	<select id="productDAO.selectTotal" resultClass="java.lang.Integer">
 		SELECT COUNT(*) total FROM product
+		where kind = #kind#
 	</select>
 
 

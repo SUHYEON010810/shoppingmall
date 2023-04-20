@@ -17,7 +17,14 @@ public class productVO {
 	private int viewPage = 1;
 	private int startIndex = 1;
 	private int endIndex = 6;
+	private int kindint = 0;
 
+	public int getKindint() {
+		return kindint;
+	}
+	public void setKindint(int kindint) {
+		this.kindint = kindint;
+	}
 	public int getViewPage() {
 		return viewPage;
 	}
@@ -88,7 +95,7 @@ public class productVO {
 	public String toString() {
 		return "productVO [prodnum=" + prodnum + ", name=" + name + ", kind=" + kind + ", price=" + price + ", content="
 				+ content + ", image=" + image + ", regdate=" + regdate + ", uploadFile=" + uploadFile + ", viewPage="
-				+ viewPage + ", startIndex=" + startIndex + ", endIndex=" + endIndex + "]";
+				+ viewPage + ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", kindint=" + kindint + "]";
 	}
 
 

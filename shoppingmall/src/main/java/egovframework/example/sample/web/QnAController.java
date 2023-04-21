@@ -69,23 +69,14 @@ public class QnAController {
 
 	/* 문의 상세 보기 */
 	@RequestMapping(value = "/QnADetail.do")
-	public void QnADetail(QnAVO vo, @RequestParam("qseq") int qseq, HttpServletResponse response) throws Exception {
+	public String QnADetail(QnAVO vo, @RequestParam("qseq") int qseq, ModelMap model) throws Exception {
 		System.out.println("문의 상세보기 들어옴");
-
-		/* 한글 인코딩 설정 */
-		response.setCharacterEncoding("utf-8");
-		String personJson ;
-
 		vo = QnAservice.seleteQnAData(qseq);
 		System.out.println("상세보기 들어온 데이터 : "+vo.toString());
 
-		personJson = "{\"qseq\":\"" + vo.getQseq() + "\",\"prodnum\":\"" + vo.getProdnum() +"\",\"u_id\":\"" + vo.getU_id() + "\",\"title\":\"" + vo.getTitle() + "\",\"content\":\"" + vo.getContent()+ "\",\"rep\":\"" + vo.getRep()+"\",\"indate\":\"" + vo.getIndate()+"\",\"name\":\"" + vo.getName() +"\",\"password\":\"\"}";
+		model.addAttribute("vo", vo);
 
-		try {
-			response.getWriter().print(personJson);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return "shop/QnADitModi";
 
 	}
 
@@ -127,7 +118,7 @@ public class QnAController {
 
 	/* 문의 삭제 */
 	@RequestMapping(value = "/QnADelect.do")
-	public void QnADelect( @RequestParam("qseq") int qseq, QnAVO vo, HttpServletResponse response) throws Exception {
+	public String QnADelect( @RequestParam("qseq") int qseq, QnAVO vo) throws Exception {
 		System.out.println("문의 삭제 들어옴");
 
 		int result = QnAservice.deleteQnA(qseq);
@@ -137,8 +128,24 @@ public class QnAController {
 		} else {
 			System.out.println("삭제 실패");
 		}
-		System.out.println("redirect 사용 전 ==========");
 
+		return "redirect:QnA.do";
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/QnAanswersave.do")
+	public void QnAanswersave(QnAVO vo) throws Exception {
+		System.out.println("답변 들어옴 ");
+		System.out.println(vo.toString());
+		System.out.println(vo.getReply());
+
+		 int result= QnAservice.updateAnswers(vo);
+		 if (result == 1) {
+				System.out.println("답변 등록 완료");
+			} else {
+				System.out.println("답변 등록 실패");
+			}
+	}
+
 
 }

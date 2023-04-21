@@ -16,6 +16,8 @@ public interface QnAService {
 
 	int deleteQnA(int qseq)throws Exception;
 
+	int updateAnswers(QnAVO vo)throws Exception;
+
 
 
 }

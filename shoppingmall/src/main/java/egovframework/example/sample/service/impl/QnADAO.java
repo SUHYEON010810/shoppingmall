@@ -40,4 +40,9 @@ public class QnADAO  extends EgovAbstractDAO{
 		return (int) delete("QnAVO.deleteQnA", qseq);
 	}
 
+	public int updateAnswers(QnAVO vo) {
+		// TODO Auto-generated method stub
+		return (int) update("QnAVO.updateAnswers",vo);
+	}
+
 }

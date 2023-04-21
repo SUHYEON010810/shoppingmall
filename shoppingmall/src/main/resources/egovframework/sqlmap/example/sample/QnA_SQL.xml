@@ -44,4 +44,10 @@
 		DELETE FROM QnA WHERE qseq = #qseq#
 	</delete>
 
+	<!-- 답변  -->
+	<update id="QnAVO.updateAnswers">
+		UPDATE QnA SET reply = #reply#, rep = 1
+		WHERE qseq = #qseq#
+	</update>
+
 </sqlMap>

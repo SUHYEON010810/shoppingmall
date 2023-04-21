@@ -23,7 +23,7 @@
 			 		SELECT prodnum, name, kind, price, content, image, TO_CHAR(regDate, 'yyyy-mm-dd')as regDate
 					FROM product
 					WHERE kind = #kind#
-					ORDER BY prodnum )a ) b
+					ORDER BY prodnum DESC )a ) b
 			<![CDATA[
 				WHERE kind = #kind# and rn >= #startIndex# AND rn <= #endIndex#
 			]]>

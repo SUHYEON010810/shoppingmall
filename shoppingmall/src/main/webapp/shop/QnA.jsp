@@ -12,7 +12,7 @@
 <body>
 <%@ include file="../include/topmenu.jsp" %>
 
-
+<div id="listDiv" >
 <div id = "user_write">
 <!-- <div id = "user_write" style="display:none;"> -->
 		<form name="frm" action="" enctype="multipart/form-data" id="frm" method="post">
@@ -41,5 +41,6 @@
 		</form>
       </div>
    </div>
+
 </body>
 </html>

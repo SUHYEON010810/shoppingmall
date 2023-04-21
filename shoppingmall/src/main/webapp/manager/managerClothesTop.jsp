@@ -17,9 +17,9 @@
 <title>상품 리스트</title>
 </head>
 <script >
-   function fn_delete(prodnum){
+   function fn_delete(prodnum, kindint){
       if( confirm ("정말 삭제하겠습니까? ")){
-         location="productDelect.do?prodnum="+prodnum;
+         location="productDelect.do?prodnum="+prodnum+"&kindint="+kindint;
       }
       var test = [1,2,3];
    }
@@ -29,7 +29,7 @@
 	<div id="topListdiv">
 		<div id="titlebtn">
 			<h2>상품 목록</h2>
-			<button onclick="location.href='productinsert.do'" class="bt_css" id="insertproductBTN">상품추가</button>
+			<button onclick="location.href='productinsert.do?kindint=${ kindint }'" class="bt_css" id="insertproductBTN">상품추가</button>
 	 	</div>
 	 	<div id="topLiatdiv__items">
 			<c:forEach var="result" items="${top}" varStatus="status">
@@ -38,8 +38,8 @@
 					<a href="productDetail.do?prodnum=${result.prodnum}"> ${ result.name } </a>
 					<input type="hidden" id="kind" name="kind"  value="${result.kind }">
 					<div id="btnDiv">
-						<button onclick="location='productModify.do?prodnum=${result.prodnum}'">수정</button>
-						<button onclick="fn_delete('${result.prodnum}')">삭제</button>
+						<button onclick="location='productModify.do?prodnum=${result.prodnum}&kindint=${ kindint }'">수정</button>
+						<button onclick="fn_delete(${result.prodnum}, ${ kindint })">삭제</button>
 					</div>
 				</div>
 			</c:forEach>

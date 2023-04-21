@@ -23,6 +23,8 @@
 			 if( confirm ("이미지를 변경 하시겠습니까? ")){
 				 const image = document.getElementById('image');
 				 image.remove();
+				 const uploadFile = document.getElementById('uploadFile');
+				 uploadFile.remove();
 
 				 html = '<input type="file" id="uploadFile" name="uploadFile" >';
 				 $("#imagetd").after(html);
@@ -63,13 +65,17 @@
 				<td colspan="2"> <input type="number" id="price" name="price" class="L_input_text" value="${topdetail.price }" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" > </td>
 			</tr>
 			<tr>
+				<input type="hidden" id="Kindint" name="Kindint"  value="${ kindint }">
 				<td> <label for="content">상품설명</label></td>
 				<td colspan="2"> <textarea rows="10" cols="53" id="content" name="content" >${topdetail.content }</textarea></td>
 			</tr>
 			<tr>
+				<!-- 이미지 변경 하지 않았을 경우도 추가해야함 지금은 이미지 변경 안하면 파일이 업데이트 되면서 지워짐 -->
 				<td> <label for="uploadFile">사진 </label></td>
 				<td id="imagetd"> <img src="imgLoad.do?fileName=${topdetail.image }" style=" height:150px;" id="image"/></td>
 				<td><input type="button" value="이미지 변경" id="imagechange"></td>
+					<input type="file" id="uploadFile" name="uploadFile"  value="${topdetail.image }">
+
 			</tr>
 			<tr>
 				<td colspan="3" id="prodInsertbutTd">

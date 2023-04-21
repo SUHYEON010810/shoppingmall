@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -44,7 +48,7 @@
 				<td> <label for="uploadFile">사진 </label></td>
 				<td> <input type="file" id="uploadFile" name="uploadFile" > </td>
 			</tr>
-
+			<input type="hidden" id="Kindint" name="Kindint"  value="${ kindint }">
 			<tr>
 				<td colspan="2" id="prodInsertbutTd">
 					<button type="submit"  class="bt_css" >등록</button>

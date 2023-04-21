@@ -20,8 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.sample.service.productService;
 import egovframework.example.sample.service.productVO;
@@ -41,7 +43,7 @@ public class shopController {
 
 	/* 사용자 상품 페이지 */
 	@RequestMapping(value = "/clothesTop.do")
-	public String clothesTop(productVO vo, ModelMap model, String clothes ) throws Exception {
+	public String clothesTop(productVO vo, ModelMap model, @RequestParam(value = "clothes", required = false) String clothes ) throws Exception {
 		vo.setKind(clothes);
 
 
@@ -97,10 +99,8 @@ public class shopController {
 
 	/* 관리자 상품 페이지 */
 	@RequestMapping(value = "/managerClothesTop.do")
-	public String managerclothesTop(productVO vo, ModelMap model, String clothes ) throws Exception {
+	public String managerclothesTop(productVO vo, ModelMap model, @RequestParam(value = "clothes", required = false) String clothes ) throws Exception {
 		vo.setKind(clothes);
-
-
 
 		int kindint = vo.getKindint();
 
@@ -159,14 +159,18 @@ public class shopController {
 
 	/* 관리자 상품 추가 페이지 */
 	@RequestMapping(value = "/productinsert.do")
-	public String productinsert() throws Exception {
+	public String productinsert(int kindint,  ModelMap model) throws Exception {
 		System.out.println("상품 추가 페이지 이동");
+
+		System.out.println(kindint);
+		model.addAttribute("kindint", kindint);
+
 		return "manager/productinsert";
 	}
 
-	/* 상품 추가 */
+	/* 관리자 상품 추가 저장 페이지 */
 	@RequestMapping(value = "/productinsertsave.do")
-	public String productinsertsave(productVO vo) throws Exception {
+	public String productinsertsave(productVO vo, RedirectAttributes redirect) throws Exception {
 		System.out.println("회원가입 저장 컨트롤러 실행");
 		System.out.println(vo.toString());
 
@@ -185,11 +189,23 @@ public class shopController {
         }
         vo.setImage(fileName);
 
-
 		/* 날짜 세팅*/
 		Calendar cal = new GregorianCalendar();
 		Date date = new Date(cal.getTimeInMillis());
 		vo.setRegdate(date);
+
+		if(vo.getKindint() != 0) {
+			if(vo.getKindint() == 1) {
+				vo.setKind("상의");
+			 	redirect.addAttribute("clothes", "상의");
+			}else if (vo.getKindint() == 2) {
+				vo.setKind("하의");
+				redirect.addAttribute("clothes", "하의");
+			}else {
+				vo.setKind("원피스");
+				redirect.addAttribute("clothes", "원피스");
+			}
+		}
 
 		String result = productservice.InsertProduct(vo);
 
@@ -198,7 +214,7 @@ public class shopController {
 		else
 			System.out.println("저장 실패");
 
-		return "redirect:index.do";
+		return "redirect:managerClothesTop.do";
 	}
 
 	/* 상위 상세보기 */
@@ -237,12 +253,13 @@ public class shopController {
 
 	/* 상품 수정 */
 	@RequestMapping(value = "productModify.do")
-	public String productModify(int prodnum, ModelMap model) throws Exception {
+	public String productModify(int prodnum, int kindint, ModelMap model) throws Exception {
 		System.out.println("수정 들어옴");
 
 		productVO vo = productservice.seleteproductData(prodnum);
 		System.out.println(vo.toString());
 
+		model.addAttribute("kindint", kindint);
 		model.addAttribute("topdetail", vo);
 
 		return "manager/productModify";
@@ -250,7 +267,7 @@ public class shopController {
 
 	/* 상품 수정 저장*/
 	@RequestMapping(value = "productModifysave.do")
-	public String productModifysave(productVO vo) throws Exception {
+	public String productModifysave(productVO vo, RedirectAttributes redirect) throws Exception {
 		System.out.println("수정 저장 들어옴");
 
 		 String fileName = null;
@@ -268,6 +285,19 @@ public class shopController {
 	        }
 	    vo.setImage(fileName);
 
+	    if(vo.getKindint() != 0) {
+			if(vo.getKindint() == 1) {
+				vo.setKind("상의");
+			 	redirect.addAttribute("clothes", "상의");
+			}else if (vo.getKindint() == 2) {
+				vo.setKind("하의");
+				redirect.addAttribute("clothes", "하의");
+			}else {
+				vo.setKind("원피스");
+				redirect.addAttribute("clothes", "원피스");
+			}
+		}
+
 	    int result = productservice.updateproduct(vo);
 		if (result == 1) {
 			System.out.println("수정 완료");
@@ -280,12 +310,25 @@ public class shopController {
 		return "redirect:managerClothesTop.do";
 	}
 
-
 	/* 상품 삭제 */
 	@RequestMapping(value = "productDelect.do")
-	public String productDelect(int prodnum) throws Exception {
+	public String productDelect(productVO vo, int prodnum, int kindint, RedirectAttributes redirect) throws Exception {
 		int result = productservice.productDelect(prodnum);
 
+		 if(vo.getKindint() != 0) {
+				if(vo.getKindint() == 1) {
+					vo.setKind("상의");
+				 	redirect.addAttribute("clothes", "상의");
+				}else if (vo.getKindint() == 2) {
+					vo.setKind("하의");
+					redirect.addAttribute("clothes", "하의");
+				}else {
+					vo.setKind("원피스");
+					redirect.addAttribute("clothes", "원피스");
+				}
+			}
+
+		System.out.println("kindint 값 : "+kindint);
 		if (result == 1) {
 			System.out.println("삭제 완료");
 		} else {

@@ -22,11 +22,6 @@
 		<h2>상품 목록</h2>
 	 	</div>
 	 	<div id="topLiatdiv__items">
-			<c:forEach var="cnt" begin="1" end="3" step="1">
-				<div>
-
-				</div>
-			</c:forEach>
 			<c:forEach var="result" items="${top}" varStatus="status">
 				<div class="topLiatdiv__items__item">
 					<img src="imgLoad.do?fileName=${result.image }" class="topimage"/>

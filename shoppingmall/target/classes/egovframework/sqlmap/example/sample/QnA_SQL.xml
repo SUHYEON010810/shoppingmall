@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="memberSpace">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+ 	<typeAlias  alias="QnAVO" type="egovframework.example.sample.service.QnAVO"/>
+
+	<!-- 상품 리스트 -->
+	<select id="QnADAO.SelectproductList" resultClass="egovMap">
+			SELECT prodnum, name, kind
+			FROM product
+	</select>
+
+	<!-- 문의 등록 -->
+	<insert id="QnADAO.InsertQnA">
+		INSERT INTO QnA(qseq, prodnum, u_id, title, content, indate)
+		values(qna_seqm.nextval, #prodnum#, #u_id#, #title#, #content#, #indate#)
+	</insert>
+
+	<!-- 문의 리스트 -->
+	<select id="QnAVO.SelectQnAList" resultClass="egovMap">
+			SELECT qseq, prodnum, u_id, title, content, reply, rep,  TO_CHAR( indate, 'yy-mm-dd')as indate
+			FROM QnA
+			ORDER BY qseq DESC
+	</select>
+
+	<!-- 문의 상세보기 -->
+	<select id="QnAVO.seleteQnAData" resultClass="QnAVO">
+		SELECT qna.qseq, qna.prodnum, qna.u_id, qna.title, qna.content,  qna.rep, qna.indate, product.name
+		FROM QnA
+		INNER JOIN product
+		ON qna.prodnum = product.prodnum
+		WHERE qseq = #qseq#
+	</select>
+
+</sqlMap>

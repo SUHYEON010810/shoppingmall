@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 #listDiv{
-   		padding:0px 400px;
+   		padding:0px 15%;
+   		margin-top:2%;
    }
 
    #nemu_div{
@@ -25,6 +26,7 @@
    }
    #nemuButton{
    		float: right;
+   		margin-top: 20px;
    }
 
    h1{
@@ -39,11 +41,20 @@
       margin-right:auto;
    }
 
-   #listTable > th, td{
+   #Listtitletable{
+  	 margin-left: 0;
+   }
+
+   #listTable > th, td, th{
       border : 1px solid #cccccc;
       padding:5px;
-      text-align: center;
+/*       text-align: center; */
    }
+	.tabletitle{
+		text-align: center;
+	}
+
+
    tr{
    		height:34px;
    }
@@ -58,3 +69,4 @@
    		margin-top:5px;
    		text-align:center;
    }
+

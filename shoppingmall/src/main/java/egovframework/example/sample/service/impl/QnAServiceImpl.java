@@ -40,4 +40,16 @@ public class QnAServiceImpl extends EgovAbstractServiceImpl implements QnAServic
 		return QnAdao.seleteQnAData(qseq);
 	}
 
+	@Override
+	public int updateQnA(QnAVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return QnAdao.updateQnA(vo);
+	}
+
+	@Override
+	public int deleteQnA(int qseq) throws Exception {
+		// TODO Auto-generated method stub
+		return QnAdao.deleteQnA(qseq);
+	}
+
 }

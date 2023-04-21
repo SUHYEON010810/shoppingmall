@@ -33,4 +33,15 @@
 		WHERE qseq = #qseq#
 	</select>
 
+	<!-- 문의 수정 -->
+	<update id="QnAVO.updateQnA">
+		UPDATE QnA SET title = #title#, content = #content#
+		WHERE qseq = #qseq#
+	</update>
+
+	<!-- 문의 삭제 -->
+	<delete id="QnAVO.deleteQnA" >
+		DELETE FROM QnA WHERE qseq = #qseq#
+	</delete>
+
 </sqlMap>

@@ -12,5 +12,10 @@ public interface QnAService {
 
 	QnAVO seleteQnAData(int qseq)throws Exception;
 
+	int updateQnA(QnAVO vo)throws Exception;
+
+	int deleteQnA(int qseq)throws Exception;
+
+
 
 }

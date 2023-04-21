@@ -21,20 +21,21 @@
 <script>
 	/* 문의 등록 */
 	function QnAwrite(){
-		$("#QnAdit").remove();
+		$("#ajax").remove();
 		$("#detailbtn").remove();
-		/* $("#modifybtn").remove(); */
-		$("#user_write").css("display","block");
+		$("#modifybtn").remove();
+		$("#QnA_write").css("display","block");
 	}
 
 	/* 문의 등록 저장 */
 	 function QnAwirte(){
+		 $("#QnA_write").css("display","none");
 		$.ajax({
 			url : "QnAsave.do",
 			type: "post",
 			data : $('#frm').serialize(),
 			success : function(responseData){
-				$("#QnAdit").remove();
+				$("#ajax").remove();
 				$("#detailbtn").remove();
 				/*
 				$("#modifybtn").remove(); */
@@ -46,23 +47,22 @@
 
 	 /* 문의 상세보기 */
 	 function QnAdetail(qseq){
-	 	$("#user_write").css("display","none");
+	 	$("#QnA_write").css("display","none");
 	 	$.ajax({
 	 		url : "QnADetail.do",
 	 		type: "get",
 	 		data : { "qseq" : qseq },
 	 		success : function(responseData){
-	 			$("#QnAdit").remove();
+	 			$("#ajax").remove();
 	 			$("#detailbtn").remove();
-	 			/*
-	 			$("#modifybtn").remove(); */
+	 			$("#modifybtn").remove();
 
 	 			var data = JSON.parse(responseData);
 
 	 			var html = ''
-	 			html += '<form action="" id="QnAdit" method="post" >';
+	 			html += '<form action="" id="ajax" method="post" >';
 	 			html += '<table id="frm_table">';
-	 			html += '<h2>상세보기</h2>';
+	 			html += '<h2> 상 세 보 기</h2>';
 
 
 	 			html += '<tr>';
@@ -86,14 +86,109 @@
 	 			html += '</form>';
 
 	 			html += '<div id="detailbtn" style=" text-align:center; margin-top:10px;">';
-	 			html += '<button type="button" onclick="userModify()" id="btn_Submit" name="signUpSubmit" class="bt_css" style="margin-right:8px;">수정</button>';
-	 			html += '<button class="bt_css" onclick="userdelete()">삭제</button>';
+	 			html += '<button type="button" onclick="" id="btn_Submit" class="bt_css" style="margin-right:8px;">답변하기</button>';
+	 			html += '<button type="button" onclick="QnAModify()" id="btn_Submit" name="signUpSubmit" class="bt_css" style="margin-right:8px;">수정</button>';
+	 			html += '<button class="bt_css" onclick="QnAdelete()">삭제</button>';
 	 			html += '</div>';
 
 	 			$("#user_board_data").after(html);
 	 		}
 	 	})
 	 }
+
+	 /* 글 수정 */
+	 function QnAModify(){
+	 	$("#QnA_write").css("display","none");
+	 	var qseq =  $("#qseq").val();
+
+	 	$.ajax({
+	 		url : "QnAModify.do",
+	 		type: "get",
+	 		data : { "qseq" : qseq },
+	 		success : function(responseData){
+	 			$("#ajax").remove();
+	 			$("#detailbtn").remove();
+	 			$("#modifybtn").remove();
+	 			var data = JSON.parse(responseData);
+
+	 			var html = ''
+
+	 				html += '<form action="" id="ajax" method="post" >';
+	 				html += '<table id="frm_table">';
+	 				html += '<h2>수 정</h2>';
+
+
+	 				html += '<tr>';
+	 				html += '<td style="width:14%;" class="tabletitle"><label >상품명</label></td>';
+	 				html += '<td><input type="text" id="name" name="name"  value="'+data.name+'"  style="width:96%;" readonly></td>';
+	 				html += '</tr>';
+
+	 				html += '<tr>';
+	 				html += '<td class="tabletitle"> <label for="title" >제목</label> </td>'
+	 				html += '<td><input style="width:96%;" type="text" id="title" name="title"  value="'+data.title+'"></td>';
+	 				html += '</tr>';
+
+	 				html += '<tr style="height:178px;">';
+	 				html += '<td class="tabletitle"> <label for="content" >내용</label> </td>';
+	 				html += '<td ><textarea cols="50" rows="10" name="content" id="content"  style="width:96%;" >'+data.content+'</textarea></td>';
+	 				html += '</tr>';
+
+	 				html += '<input type="hidden" id="qseq" name="qseq"  value="'+data.qseq+'">';
+
+	 				html += '</table>';
+	 				html += '</form>';
+
+	 				html += '<div  id="modifybtn"  style="text-align:center; margin-top:10px;">';
+	 				html += '<button type="submit" onclick="QnAModifySave()" id="btn_Submit" name="signUpSubmit" class="bt_css" style="margin-right:8px;">수정</button>';
+	 				html += '<button class="bt_css" onclick="cancell()">취소</button>';
+	 				html += '</div>';
+
+	 				$("#user_board_data").after(html);
+	 		}
+	 	})
+	 }
+
+	 /* 수정 데이터 저장 */
+	  function QnAModifySave(){
+	 	$.ajax({
+	 		url : "QnAModifysave.do",
+	 		type: "get",
+	 		data : $('#ajax').serialize(),
+	 		success : function(responseData){
+	 			$("#ajax").remove();
+	 			$("#detailbtn").remove();
+	 			$("#modifybtn").remove();
+	 			var data = JSON.parse(responseData);
+	 		}
+	 	})
+	 	location.reload();
+
+	 }
+	 /* 수정 취소를 누를 경우 */
+	  function cancell(){
+			location.reload();
+	}
+
+	  /* 삭제 */
+	  function QnAdelete(){
+	  	if( confirm ("정말 삭제하겠습니까? ")){
+	  		var qseq =  $("#qseq").val();
+	  		$.ajax({
+	  			url : "QnADelect.do",
+	  			type: "get",
+	  			data : { "qseq" : qseq},
+	  			success : function(responseData){
+	  				$("#ajax").remove();
+	  				$("#detailbtn").remove();
+	  				$("#modifybtn").remove();
+	  				var data = JSON.parse(responseData);
+
+	  			}
+	  		})
+	  		location.reload();
+	       }
+	  }
+
 
 
 </script>
@@ -115,7 +210,7 @@
             <th style="width: 10%;">답변 여부</th>
          </tr>
   	  </table>
-      <div style="overflow:auto; width:100%; height:205px; text-align:center; margin-bottom:40px;">
+      <div style="overflow:auto; width:100%; height:172px; text-align:center; margin-bottom:40px;">
           <table>
 
              <!-- 반복문 -->
@@ -137,10 +232,10 @@
        	<!-- 상세보기 데이터 들어갈 곳 -->
       </div>
 
-	<div id = "user_write" style="display:none;">
+	<div id = "QnA_write" style="display:none;">
 		<form name="frm" action="" id="frm" method="post">
 			<table id="frm_table">
-				<h2>문의하기</h2>
+				<h2>문 의 하 기</h2>
 				<tr>
 					<td class="tabletitle"> <label for="prodnum" >상품명</label> </td>
 					<td>

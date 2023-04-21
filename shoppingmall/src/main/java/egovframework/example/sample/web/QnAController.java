@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import egovframework.example.sample.service.QnAService;
 import egovframework.example.sample.service.QnAVO;
 
-
 @Controller
 public class QnAController {
 	@Resource(name="QnAService")
 	private QnAService QnAservice;
+
+	/* 문의 로그인 안했을 때 오류오류 처리 해야함.*/
 
 
 	/* 문의 페이지 이동*/
@@ -76,7 +77,7 @@ public class QnAController {
 		String personJson ;
 
 		vo = QnAservice.seleteQnAData(qseq);
-		System.out.println("들어온 데이터 : "+vo.toString());
+		System.out.println("상세보기 들어온 데이터 : "+vo.toString());
 
 		personJson = "{\"qseq\":\"" + vo.getQseq() + "\",\"prodnum\":\"" + vo.getProdnum() +"\",\"u_id\":\"" + vo.getU_id() + "\",\"title\":\"" + vo.getTitle() + "\",\"content\":\"" + vo.getContent()+ "\",\"rep\":\"" + vo.getRep()+"\",\"indate\":\"" + vo.getIndate()+"\",\"name\":\"" + vo.getName() +"\",\"password\":\"\"}";
 
@@ -91,9 +92,53 @@ public class QnAController {
 
 	/* 문의 수정 */
 	@RequestMapping(value = "/QnAModify.do")
-	public String QnAModify(QnAVO vo) throws Exception {
+	public void QnAModify(QnAVO vo, @RequestParam("qseq") int qseq, HttpServletResponse response) throws Exception {
+		System.out.println("문의 수정 들어옴");
+		/* 한글 인코딩 설정 */
+		response.setCharacterEncoding("utf-8");
+		String personJson ;
 
-		return "";
+		vo = QnAservice.seleteQnAData(qseq);
+		System.out.println("수정 들어온 데이터 : "+vo.toString());
+
+		personJson = "{\"qseq\":\"" + vo.getQseq() + "\",\"prodnum\":\"" + vo.getProdnum() +"\",\"u_id\":\"" + vo.getU_id() + "\",\"title\":\"" + vo.getTitle() + "\",\"content\":\"" + vo.getContent()+ "\",\"rep\":\"" + vo.getRep()+"\",\"indate\":\"" + vo.getIndate()+"\",\"name\":\"" + vo.getName() +"\",\"password\":\"\"}";
+
+		try {
+			response.getWriter().print(personJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* 수정 데이터 저장 */
+	@RequestMapping(value = "/QnAModifysave.do")
+	public void QnAModifysave(QnAVO vo, HttpServletResponse response) throws Exception {
+		System.out.println("수정 저장 들어옴 ");
+		System.out.println(vo.toString());
+		int result = QnAservice.updateQnA(vo);
+		if (result == 1) {
+			System.out.println("수정 완료");
+		} else {
+			System.out.println("수정 실패");
+		}
+
+		System.out.println(result);
+	}
+
+	/* 문의 삭제 */
+	@RequestMapping(value = "/QnADelect.do")
+	public void QnADelect( @RequestParam("qseq") int qseq, QnAVO vo, HttpServletResponse response) throws Exception {
+		System.out.println("문의 삭제 들어옴");
+
+		int result = QnAservice.deleteQnA(qseq);
+
+		if (result == 1) {
+			System.out.println("삭제 완료");
+		} else {
+			System.out.println("삭제 실패");
+		}
+		System.out.println("redirect 사용 전 ==========");
+
 	}
 
 }
